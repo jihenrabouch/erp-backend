@@ -1,8 +1,10 @@
 package com.erp.backend.dto;
 
-public class LoginRequest {
+public class RegisterRequest {
     private String username;
     private String password;
+    private String email;
+    private String fullName;
 
     // Getters et Setters
     public String getUsername() { return username; }
@@ -10,4 +12,10 @@ public class LoginRequest {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 }

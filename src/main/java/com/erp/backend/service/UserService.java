@@ -14,6 +14,7 @@ public interface UserService {
     // Pour authentification
     Optional<User> findByUsername(String username);
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email); // ✅ AJOUTEZ CETTE MÉTHODE
 
     User save(User newUser);
 }

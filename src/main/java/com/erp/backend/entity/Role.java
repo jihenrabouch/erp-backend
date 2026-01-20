@@ -9,12 +9,21 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Enumerated(EnumType.STRING) // ✅ IMPORTANT : Stocke l'enum comme String
+    @Column(unique = true, nullable = false)
+    private ERole name;
 
-    // 🔹 Getters et Setters
+    // Constructeurs
+    public Role() {}
+
+    public Role(ERole name) {
+        this.name = name;
+    }
+
+    // Getters et Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public ERole getName() { return name; }
+    public void setName(ERole name) { this.name = name; }
 }

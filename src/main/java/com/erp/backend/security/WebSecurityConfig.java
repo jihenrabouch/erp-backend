@@ -2,8 +2,6 @@ package com.erp.backend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     /**
-     * ✅ Bean pour encoder les mots de passe (utilisé dans AuthController)
+     * ✅ Bean pour encoder les mots de passe - DOIT ÊTRE DANS CETTE CLASSE
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -23,28 +21,18 @@ public class WebSecurityConfig {
     }
 
     /**
-     * ✅ Bean pour l'AuthenticationManager (utilisé dans AuthController)
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    /**
-     * ✅ Configuration des règles de sécurité HTTP
+     * ✅ Configuration SANS sécurité pour les tests
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // désactive CSRF pour API REST
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Autoriser les endpoints publics (login/register)
-                        .requestMatchers("/api/auth/**").permitAll()
-                        // Protéger le reste
                         .anyRequest().permitAll()
                 )
-                .formLogin(form -> form.disable()) // on n'utilise pas le formulaire de login par défaut
-                .httpBasic(httpBasic -> httpBasic.disable()); // ni l'authentification basique
+                .formLogin(form -> form.disable())
+                .httpBasic(httpBasic -> httpBasic.disable());
 
         return http.build();
     }
